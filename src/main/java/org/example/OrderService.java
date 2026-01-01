@@ -58,6 +58,15 @@ public class OrderService {
             System.out.println("Invalid Choice. Please Try Again.");
         }
 
+        double discount = 0;
+        double finalPrice = price;
+
+        if((username != null) && (!username.equals("Guest"))){
+            int total_orders = orderCount(username);
+            discount = getDiscount(total_orders);
+            finalPrice = price - (price*discount);
+        }
+
         System.out.print("Your Delivery Address: ");
         String deliveryAddress = sc.nextLine();
 
@@ -73,7 +82,7 @@ public class OrderService {
 
         String orderId = generateOrderId();
 
-        Order order = new Order(orderId, username, itemName, price, deliveryAddress, orderType, dateTime);
+        Order order = new Order(orderId, username, itemName, price, finalPrice, deliveryAddress, orderType, dateTime);
 
         saveOrder(order);
 
@@ -86,7 +95,7 @@ public class OrderService {
         try (BufferedReader br = new BufferedReader(new FileReader(orderFile))) {
             while (br.readLine() != null) count++;
         } catch (IOException ignored) {}
-        return "ORD-" + count;
+        return "TBCS-" + count;
     };
 
     private void saveOrder(Order order) {
@@ -95,5 +104,35 @@ public class OrderService {
         } catch (IOException e) {
             System.out.println("Error while writing to file.");
         }
+    }
+
+    private int orderCount(String usrename){
+        int orderCount = 0;
+        try(BufferedReader br = new BufferedReader(new FileReader(orderFile))){
+            String line;
+            while ((line = br.readLine()) != null){
+                String[] data = line.split(", ");
+                if (data[1].equals(usrename)) {
+                    orderCount++;
+                }
+            }
+        }
+        catch(IOException e){
+            System.out.println("Error while writing to file.");
+        }
+        return orderCount;
+    }
+
+    private double getDiscount(int orderCount){
+        if(orderCount >= 10){
+            return 0.15;
+        }
+        else if(orderCount >= 5){
+            return 0.07;
+        }
+        else if(orderCount >= 3){
+            return 0.03;
+        }
+        return 0.0;
     }
 }
