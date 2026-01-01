@@ -7,7 +7,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Authentication auth = new Authentication();
 
-        System.out.println("=========== SELECT AN OPTION ===========");
+       System.out.println("============= TASTEBUDS CATERING SYSTEM =============");
+
+        System.out.println("============= SELECT AN OPTION =============");
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("3. Guest User");
@@ -20,7 +22,7 @@ public class Main {
             auth.register();
         }
         else if (option == 2){
-            System.out.println("Login");
+            auth.login();
         }
         else if (option == 3){
             System.out.println("Guest");
