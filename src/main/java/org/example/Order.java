@@ -1,5 +1,7 @@
 package org.example;
 
+import com.sun.security.jgss.GSSUtil;
+
 public class Order {
     private String orderId;
     private String username;
@@ -24,6 +26,7 @@ public class Order {
     }
 
     public void displayOrderDetails(){
+        System.out.println("============= ORDER RECEIPT =============");
         System.out.println("Order ID         : " + orderId);
         System.out.println("Item Name        : " + itemName);
         System.out.println("Price            : " + price);

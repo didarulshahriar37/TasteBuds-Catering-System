@@ -6,6 +6,7 @@ public class Main {
    public static void main() {
         Scanner sc = new Scanner(System.in);
         Authentication auth = new Authentication();
+        OrderService orderService = new OrderService();
 
        System.out.println("============= TASTEBUDS CATERING SYSTEM =============");
 
@@ -18,17 +19,26 @@ public class Main {
         int option = sc.nextInt();
         sc.nextLine();
 
+        String username = null;
+
         if(option == 1){
-            auth.register();
+            username = auth.register();
         }
         else if (option == 2){
-            auth.login();
+            username = auth.login();
         }
         else if (option == 3){
-            System.out.println("Guest");
+            System.out.println("Continuing As Guest User");
         }
         else{
             System.out.println("Invalid Option.");
+        }
+
+        if(username != null){
+            orderService.placeOrder(username);
+        }
+        else{
+            orderService.placeOrder("Guest");
         }
 
         sc.close();

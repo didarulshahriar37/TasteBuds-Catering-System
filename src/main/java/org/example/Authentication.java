@@ -14,21 +14,22 @@ public class Authentication {
         }
     }
 
-    public void register(){
+    public String register(){
         System.out.print("Your Role (User/ Driver): ");
         String role = sc.nextLine();
 
         if(role.equalsIgnoreCase("User")){
-            registerUser();
+            return registerUser();
         } else if (role.equalsIgnoreCase("Driver")) {
             registerDriver();
         }
         else{
             System.out.println("Invalid Role");
         }
+        return null;
     }
 
-    private void registerUser(){
+    private String registerUser(){
         System.out.print("Your Name: ");
         String name = sc.nextLine();
         System.out.print("Your Password: ");
@@ -37,10 +38,12 @@ public class Authentication {
         try(FileWriter fw = new FileWriter(dataFolder + "/users.txt", true)){
             fw.write(name + ", " + password + "\n");
             System.out.println("User Registration Successful!");
+            return name;
         }
         catch (IOException e){
             System.out.println("An error occurred.");
         }
+        return null;
     }
 
     private void registerDriver(){
@@ -59,12 +62,12 @@ public class Authentication {
         }
     }
 
-    public void login(){
+    public String login(){
         System.out.print("Your Role (User/ Driver/Head Chef/ Delivery Manager): ");
         String role = sc.nextLine();
 
         if(role.equalsIgnoreCase("User")){
-            loginUser();
+            return loginUser();
         }
         else if(role.equalsIgnoreCase("Driver")){
             loginDriver();
@@ -75,15 +78,23 @@ public class Authentication {
         else if(role.equalsIgnoreCase("Delivery Manager")){
             loginManager();
         }
+        return null;
     }
 
-    private void loginUser(){
+    private String loginUser(){
         System.out.print("Your Name: ");
         String name = sc.nextLine();
         System.out.print("Your Password: ");
         String password = sc.nextLine();
 
-        authenticate("users.txt", name, password, 2);
+        boolean success = authenticate("users.txt", name, password, 2);
+
+        if (success){
+            System.out.println("Login Successful!");
+            return name;
+        }
+        System.out.println("Login Failed!");
+        return null;
     }
 
     private void loginDriver(){
@@ -115,25 +126,20 @@ public class Authentication {
         authenticate("deliveryManager.txt", name, password, 2);
     }
 
-    private void authenticate(String file, String name, String match, int fields){
-        try(BufferedReader br = new BufferedReader((new FileReader(dataFolder + "/" + file)))){
+    private boolean authenticate(String file, String name, String match, int fields) {
+        try (BufferedReader br = new BufferedReader((new FileReader(dataFolder + "/" + file)))) {
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] data = line.split(", ");
-                if(data[0].equals(name)){
+                if (data[0].equals(name)) {
                     String combined = (fields == 3) ? data[1] + ", " + data[2] : data[1];
 
-                    if(combined.equals(match)){
-                        System.out.println("Login Successful!");
-                        return ;
-                    }
+                    return combined.equals(match);
                 }
             }
-            System.out.println("Login Failed!");
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("An error occurred.");
         }
+        return false;
     }
-
 }
