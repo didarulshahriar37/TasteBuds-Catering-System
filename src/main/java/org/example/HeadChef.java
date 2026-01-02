@@ -56,6 +56,12 @@ public class HeadChef {
     public void assignChef(){
         System.out.print("Enter Order Id: ");
         String orderId = sc.nextLine();
+
+        if(isAlreadyAssigned(orderId)){
+            System.out.println("This order already has a chef assigned!");
+            return;
+        }
+
         System.out.print("Enter Chef Name(s): ");
         String chefName = sc.nextLine();
         System.out.print("Estimated Time: ");
@@ -105,5 +111,19 @@ public class HeadChef {
         System.out.println("Order Type         : " + data[6]);
         System.out.println("Assigned Chef(s)   : " + chefName);
         System.out.println("Estimated Time     : " + estimatedTime);
+    }
+
+    private boolean isAlreadyAssigned(String orderId){
+        try(BufferedReader br = new BufferedReader(new FileReader(chefFile))){
+            String line;
+            while((line = br.readLine()) != null){
+                if(line.startsWith(orderId)){
+                    return true;
+                }
+            }
+        } catch(IOException e){
+            System.out.println("Error reading assigned chef file.");
+        }
+        return false;
     }
 }
