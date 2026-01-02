@@ -55,7 +55,10 @@ public class Main {
             System.out.println("\n============= USER MENU =============");
             System.out.println("1.Place an order");
             System.out.println("2.View all orders");
-            System.out.println("3.Exit");
+            System.out.println("3.View Delivered orders");
+            System.out.println("4.Add Feedback");
+            System.out.println("5.View Your Feedbacks");
+            System.out.println("6.Exit");
             System.out.print("> ");
 
             int choice = sc.nextInt();
@@ -78,6 +81,15 @@ public class Main {
                 }
             }
             else if(choice == 3){
+                orderService.viewDeliveredOrders();
+            }
+            else if (choice == 4){
+                orderService.giveFeedback(username, sc);
+            }
+            else if (choice == 5){
+                orderService.viewMyFeedbacks(username);
+            }
+            else if(choice == 6){
                 running = false;
             }
         }

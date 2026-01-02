@@ -172,4 +172,53 @@ public class OrderService {
             System.out.println("No Orders has been placed yet.");
         }
     }
+
+    public void viewDeliveredOrders(){
+        System.out.println("============= DELIVERED ORDERS =============");
+        try (BufferedReader br = new BufferedReader(new FileReader("data/onDelivery.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(", ");
+                System.out.println("Order ID: " + data[0]);
+                System.out.println("Item: " + data[2]);
+                System.out.println("-------------------------------------");
+            }
+        } catch (IOException e) {
+            System.out.println("No on-delivery orders found.");
+        }
+    }
+
+    public void giveFeedback(String username, Scanner sc) {
+        System.out.print("Enter Order ID: ");
+        String orderId = sc.nextLine();
+        System.out.print("Enter your Feedback: ");
+        String feedback = sc.nextLine();
+
+        try (FileWriter fw = new FileWriter("data/feedbacks.txt", true)) {
+            fw.write(username + ", " + orderId + ", " + feedback + "\n");
+            System.out.println("Feedback submitted successfully!");
+        } catch (IOException e) {
+            System.out.println("Error writing feedback.");
+        }
+    }
+
+    public void viewMyFeedbacks(String username) {
+        System.out.println("============= MY FEEDBACKS =============");
+        try (BufferedReader br = new BufferedReader(new FileReader("data/feedbacks.txt"))) {
+            String line;
+            boolean found = false;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(", ");
+                if (data[0].equals(username)) {
+                    System.out.println("Order ID: " + data[1]);
+                    System.out.println("Feedback: " + data[2]);
+                    System.out.println("-------------------------------------");
+                    found = true;
+                }
+            }
+            if(!found) System.out.println("No feedbacks found.");
+        } catch (IOException e) {
+            System.out.println("Error reading feedbacks.");
+        }
+    }
 }
