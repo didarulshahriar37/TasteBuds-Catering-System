@@ -32,13 +32,41 @@ public class Main {
         }
         else{
             System.out.println("Invalid Option.");
+            sc.close();
+            return;
         }
 
-        if(username != null){
-            orderService.placeOrder(username);
-        }
-        else{
-            orderService.placeOrder("Guest");
+        boolean running = true;
+
+        while(running){
+            System.out.println("============= USER MENU =============");
+            System.out.println("1.Place an order");
+            System.out.println("2.View all orders");
+            System.out.println("3.Exit");
+            System.out.print("> ");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            if(choice == 1){
+                if(username != null){
+                    orderService.placeOrder(username);
+                }
+                else{
+                    orderService.placeOrder("Guest");
+                }
+            }
+            else if(choice == 2){
+                if(username != null){
+                    orderService.viewOrders(username);
+                }
+                else {
+                    orderService.viewOrders("Guest");
+                }
+            }
+            else if(choice == 3){
+                running = false;
+            }
         }
 
         sc.close();

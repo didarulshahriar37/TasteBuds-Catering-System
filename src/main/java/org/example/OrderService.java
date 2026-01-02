@@ -135,4 +135,41 @@ public class OrderService {
         }
         return 0.0;
     }
+
+    public void viewOrders(String username){
+        if(username == null || username.equals("Guest")){
+            System.out.println("Not Available for unregistered user.");
+
+            return ;
+        }
+
+        System.out.println("============= PREVIOUS ORDERS =============");
+        boolean found = false;
+        try(BufferedReader br = new BufferedReader(new FileReader(orderFile))){
+            String line;
+
+            while((line = br.readLine()) != null){
+                String[] data = line.split(", ");
+
+                if(data[1].equals(username)){
+                    found = true;
+                    System.out.println("Order Id: " + data[0]);
+                    System.out.println("Item Name: " + data[2]);
+                    System.out.println("Price: " + data[3]);
+                    System.out.println("Discounted Price: " + data[4]);
+                    System.out.println("Delivery Address: " + data[5]);
+                    System.out.println("Order Type: " + data[6]);
+                    System.out.println("Order Date: " + data[7]);
+                    System.out.println("-------------------------------------");
+                }
+            }
+        }
+        catch (IOException e){
+            System.out.println("Error while reading the file.");
+            return;
+        }
+        if(!found){
+            System.out.println("No Orders has been placed yet.");
+        }
+    }
 }
