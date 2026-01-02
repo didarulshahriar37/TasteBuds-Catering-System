@@ -6,10 +6,10 @@ public class Main {
    public static void main() {
         Scanner sc = new Scanner(System.in);
         Authentication auth = new Authentication();
+        HeadChef headChef = new HeadChef();
         OrderService orderService = new OrderService();
 
        System.out.println("============= TASTEBUDS CATERING SYSTEM =============");
-
         System.out.println("============= SELECT AN OPTION =============");
         System.out.println("1. Register");
         System.out.println("2. Login");
@@ -36,10 +36,16 @@ public class Main {
             return;
         }
 
+        if("Head Chef".equals(username)){
+            headChef.headChefInterface();
+            sc.close();
+            return;
+        }
+
         boolean running = true;
 
         while(running){
-            System.out.println("============= USER MENU =============");
+            System.out.println("\n============= USER MENU =============");
             System.out.println("1.Place an order");
             System.out.println("2.View all orders");
             System.out.println("3.Exit");

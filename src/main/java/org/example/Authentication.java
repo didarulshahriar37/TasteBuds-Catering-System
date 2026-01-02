@@ -73,7 +73,7 @@ public class Authentication {
             loginDriver();
         }
         else if(role.equalsIgnoreCase("Head Chef")){
-            loginChef();
+            return loginChef();
         }
         else if(role.equalsIgnoreCase("Delivery Manager")){
             loginManager();
@@ -108,13 +108,20 @@ public class Authentication {
         authenticate("drivers.txt", name, password + ", " + license, 3);
     }
 
-    private void loginChef(){
+    private String loginChef(){
         System.out.print("Username: ");
         String name = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
 
-        authenticate("headChef.txt", name, password, 2);
+        boolean success = authenticate("headChef.txt", name, password, 2);
+
+        if(success){
+            System.out.println("Login Successful!");
+            return "Head Chef";
+        }
+        System.out.println("Login Failed!");
+        return null;
     }
 
     private void loginManager(){
