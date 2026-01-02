@@ -49,9 +49,9 @@ public class Authentication {
     private void registerDriver(){
         System.out.print("Your Name: ");
         String name = sc.nextLine();
-        System.out.println("Your Password: ");
+        System.out.print("Your Password: ");
         String password = sc.nextLine();
-        System.out.println("Driving License: ");
+        System.out.print("Driving License: ");
         String license = sc.nextLine();
 
         try(FileWriter fw = new FileWriter(dataFolder + "/drivers.txt", true)){
@@ -76,7 +76,7 @@ public class Authentication {
             return loginChef();
         }
         else if(role.equalsIgnoreCase("Delivery Manager")){
-            loginManager();
+            return loginManager();
         }
         return null;
     }
@@ -124,13 +124,20 @@ public class Authentication {
         return null;
     }
 
-    private void loginManager(){
+    private String loginManager(){
         System.out.print("Username: ");
         String name = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
 
-        authenticate("deliveryManager.txt", name, password, 2);
+        boolean success = authenticate("deliveryManager.txt", name, password, 2);
+
+        if(success){
+            System.out.println("Login Successful!");
+            return "Delivery Manager";
+        }
+        System.out.println("Login Failed!");
+        return null;
     }
 
     private boolean authenticate(String file, String name, String match, int fields) {

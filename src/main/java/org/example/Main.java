@@ -3,11 +3,12 @@ package org.example;
 import java.util.Scanner;
 
 public class Main {
-   public static void main() {
+   public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Authentication auth = new Authentication();
         HeadChef headChef = new HeadChef();
         OrderService orderService = new OrderService();
+        DeliveryManager deliveryManager = new DeliveryManager();
 
        System.out.println("============= TASTEBUDS CATERING SYSTEM =============");
         System.out.println("============= SELECT AN OPTION =============");
@@ -38,6 +39,12 @@ public class Main {
 
         if("Head Chef".equals(username)){
             headChef.headChefInterface();
+            sc.close();
+            return;
+        }
+
+        if("Delivery Manager".equals(username)){
+            deliveryManager.deliveryManagerInterface();
             sc.close();
             return;
         }

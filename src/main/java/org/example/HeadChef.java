@@ -76,7 +76,7 @@ public class HeadChef {
 
         try(FileWriter fw = new FileWriter(chefFile, true)){
             String[] data = order.split(", ");
-            fw.write(data[0] + ", " + data[1] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ", " + data[5] + ", " + data[6] + ", " + chefName + ", " + data[7] + ", " + estimatedTime);
+            fw.write(data[0] + ", " + data[1] + ", " + data[2] + ", " + data[3] + ", " + data[4] + ", " + data[5] + ", " + data[6] + ", " + chefName + ", " + data[7] + ", " + estimatedTime + "\n");
             System.out.println("Chef Assigned Successfully");
             displayAssignedInfo(data, chefName, estimatedTime);
         }
